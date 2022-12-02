@@ -8,7 +8,7 @@ import kotlin.time.measureTimedValue
 class Day01Test {
 
     private val calories =
-        listOf("1000", "2000", "3000", "", "4000", "", "5000", "6000", "", "7000", "8000", "9000", "", "10000")
+        listOf(listOf(1000, 2000, 3000), listOf(4000), listOf(5000, 6000), listOf(7000, 8000, 9000), listOf(10000))
 
     private val test = mapOf(
         Day01::part1 to 24000,
