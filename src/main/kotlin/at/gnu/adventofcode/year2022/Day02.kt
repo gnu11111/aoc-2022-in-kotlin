@@ -1,5 +1,7 @@
 package at.gnu.adventofcode.year2022
 
+import at.gnu.adventofcode.year2022.Day02.Sign.*
+
 class Day02(input: List<String>) {
 
     companion object {
@@ -21,32 +23,30 @@ class Day02(input: List<String>) {
 
     private fun String.toSign(): Sign =
         when (this) {
-            "A", "X" -> Sign.Rock
-            "B", "Y" -> Sign.Paper
-            "C", "Z" -> Sign.Scissors
+            "A", "X" -> Rock
+            "B", "Y" -> Paper
+            "C", "Z" -> Scissors
             else -> error("unknown sign $this")
         }
 
     private fun Pair<Sign, Sign>.calculateScore(): Int =
-        when {
-            (first == second) -> 3 + second.score
-            (second == Sign.Rock) && (first == Sign.Scissors) -> 6 + Sign.Rock.score
-            (second == Sign.Scissors) && (first == Sign.Paper) -> 6 + Sign.Scissors.score
-            (second == Sign.Paper) && (first == Sign.Rock) -> 6 + Sign.Paper.score
+        when (first to second) {
+            Scissors to Rock, Paper to Scissors, Rock to Paper -> 6 + second.score
+            Rock to Rock, Paper to Paper, Scissors to Scissors -> 3 + second.score
             else -> second.score
         }
 
     private fun Pair<Sign, Sign>.manipulate(): Pair<Sign, Sign> =
-        when {
-            (second == Sign.Rock) && (first == Sign.Rock) -> Pair(Sign.Rock, Sign.Scissors)
-            (second == Sign.Rock) && (first == Sign.Scissors) -> Pair(Sign.Scissors, Sign.Paper)
-            (second == Sign.Rock) && (first == Sign.Paper) -> Pair(Sign.Paper, Sign.Rock)
-            (second == Sign.Paper) && (first == Sign.Rock) -> Pair(Sign.Rock, Sign.Rock)
-            (second == Sign.Paper) && (first == Sign.Scissors) -> Pair(Sign.Scissors, Sign.Scissors)
-            (second == Sign.Paper) && (first == Sign.Paper) -> Pair(Sign.Paper, Sign.Paper)
-            (second == Sign.Scissors) && (first == Sign.Rock) -> Pair(Sign.Rock, Sign.Paper)
-            (second == Sign.Scissors) && (first == Sign.Scissors) -> Pair(Sign.Scissors, Sign.Rock)
-            (second == Sign.Scissors) && (first == Sign.Paper) -> Pair(Sign.Paper, Sign.Scissors)
+        when (first to second) {
+            Rock to Rock -> Pair(Rock, Scissors)
+            Scissors to Rock -> Pair(Scissors, Paper)
+            Paper to Rock -> Pair(Paper, Rock)
+            Rock to Paper -> Pair(Rock, Rock)
+            Scissors to Paper -> Pair(Scissors, Scissors)
+            Paper to Paper -> Pair(Paper, Paper)
+            Rock to Scissors -> Pair(Rock, Paper)
+            Scissors to Scissors -> Pair(Scissors, Rock)
+            Paper to Scissors -> Pair(Paper, Scissors)
             else -> this
         }
 }
@@ -54,6 +54,6 @@ class Day02(input: List<String>) {
 fun main() {
     val input = Day02::class.java.getResource(Day02.input)!!.readText().trim().split("\n", "\r\n")
     val day02 = Day02(input)
-    println("Day02::part1 -> ${day02.part1()}")
-    println("Day02::part2 -> ${day02.part2()}")
+    println("Day02::part1 -> ${day02.part1()}") // 14531
+    println("Day02::part2 -> ${day02.part2()}") // 11258
 }
