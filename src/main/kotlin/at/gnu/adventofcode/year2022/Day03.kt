@@ -40,6 +40,6 @@ class Day03(private val rucksacks: List<String>) {
 fun main() {
     val input = Day03::class.java.getResource(Day03.input)!!.readText().trim().split("\n", "\r\n")
     val day03 = Day03(input)
-    println("Day03::part1 -> ${day03.part1()}") // 8153
+    println("Day03::part1 -> ${day03.part1()}")
     println("Day03::part2 -> ${day03.part2()}")
 }
