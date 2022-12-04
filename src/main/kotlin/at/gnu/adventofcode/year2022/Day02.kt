@@ -38,15 +38,15 @@ class Day02(input: List<String>) {
 
     private fun Pair<Sign, Sign>.manipulate(): Pair<Sign, Sign> =
         when (first to second) {
-            Rock to Rock -> Pair(Rock, Scissors)
-            Scissors to Rock -> Pair(Scissors, Paper)
-            Paper to Rock -> Pair(Paper, Rock)
-            Rock to Paper -> Pair(Rock, Rock)
-            Scissors to Paper -> Pair(Scissors, Scissors)
-            Paper to Paper -> Pair(Paper, Paper)
-            Rock to Scissors -> Pair(Rock, Paper)
-            Scissors to Scissors -> Pair(Scissors, Rock)
-            Paper to Scissors -> Pair(Paper, Scissors)
+            Rock to Rock -> Rock to Scissors          // lose
+            Scissors to Rock -> Scissors to Paper     // lose
+            Paper to Rock -> Paper to Rock            // lose
+            Rock to Paper -> Rock to Rock             // draw
+            Scissors to Paper -> Scissors to Scissors // draw
+            Paper to Paper -> Paper to Paper          // draw
+            Rock to Scissors -> Rock to Paper         // win
+            Scissors to Scissors -> Scissors to Rock  // win
+            Paper to Scissors -> Paper to Scissors    // win
             else -> this
         }
 }
