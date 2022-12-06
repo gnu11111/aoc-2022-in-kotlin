@@ -13,7 +13,7 @@ class Day03(private val rucksacks: List<String>) {
         }
 
     fun part2(): Int =
-        rucksacks.windowed(3, 3).fold(0) { sum, group ->
+        rucksacks.chunked(3).fold(0) { sum, group ->
             sum + commonItem(group[0], group[1], group[2]).priority()
         }
 
