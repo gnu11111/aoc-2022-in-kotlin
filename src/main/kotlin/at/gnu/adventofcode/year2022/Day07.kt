@@ -9,11 +9,16 @@ class Day07(private val input: List<String>) {
         val file = """(\d+) (.*)""".toRegex()
     }
 
-    data class File(val name: String, val size: Int)
-    data class Directory(val name: String, val files: MutableList<File>, val directories: MutableList<Directory>,
-                         val parent: Directory?)
+    data class File(val name: String, val size: Int = 0)
 
-    private val sizes = createTree().calculateTotalDirectorySizes()
+    data class Directory(
+        val name: String,
+        val parent: Directory?,
+        val files: MutableList<File> = mutableListOf(),
+        val directories: MutableList<Directory> = mutableListOf()
+    )
+
+    private val sizes = createTree().calculateDirectorySizes()
 
     fun part1(): Int =
         sizes.sumOf { if (it < 100000) it else 0 }
@@ -21,41 +26,33 @@ class Day07(private val input: List<String>) {
     fun part2(): Int =
         sizes.sorted().first { it > (sizes.first() - 40000000) }
 
-    private fun Directory.calculateTotalDirectorySizes(sizes: List<Int> = emptyList()): List<Int> =
-        directories.fold(sizes + calculateTotalSize()) { acc, it -> acc + it.calculateTotalDirectorySizes() }
+    private fun Directory.calculateDirectorySizes(sizes: List<Int> = emptyList()): List<Int> =
+        directories.fold(sizes + calculateTotalSize()) { acc, it -> acc + it.calculateDirectorySizes() }
 
     private fun Directory.calculateTotalSize(): Int =
         files.sumOf { it.size } + directories.sumOf { it.calculateTotalSize() }
 
     private fun createTree(): Directory {
-        val root = Directory("/", mutableListOf(), mutableListOf(), null)
+        val root = Directory("/", null, mutableListOf(), mutableListOf())
         var current = root
         for (line in input) {
             when {
-                cd.matches(line) -> {
-                    current = when (val directoryName = cd.matchEntire(line)!!.groups[1]!!.value) {
-                        "/" -> root
-                        ".." -> current.parent ?: root
-                        else -> {
-                            val directory = current.directories.firstOrNull { it.name == directoryName }
-                            directory ?: Directory(directoryName, mutableListOf(), mutableListOf(), current)
-                        }
-                    }
+                cd.matches(line) -> current = when (val name = cd.matchEntire(line)!!.groups[1]!!.value) {
+                    "/" -> root
+                    ".." -> current.parent ?: root
+                    else -> current.directories.firstOrNull { it.name == name } ?: Directory(name, current)
                 }
 
                 dir.matches(line) -> {
                     val directoryName = dir.matchEntire(line)!!.groups[1]!!.value
-                    val directory = current.directories.firstOrNull { it.name == directoryName }
-                    if (directory == null)
-                        current.directories += Directory(directoryName, mutableListOf(), mutableListOf(), current)
+                    if (current.directories.none { it.name == directoryName })
+                        current.directories += Directory(directoryName, current)
                 }
 
                 file.matches(line) -> {
-                    val fileSize = file.matchEntire(line)!!.groups[1]!!.value.toInt()
                     val fileName = file.matchEntire(line)!!.groups[2]!!.value
-                    val file1 = current.files.firstOrNull { it.name == fileName }
-                    if (file1 == null)
-                        current.files += File(fileName, fileSize)
+                    if (current.files.none { it.name == fileName })
+                        current.files += File(fileName, size = file.matchEntire(line)!!.groups[1]!!.value.toInt())
                 }
 
                 else -> continue
