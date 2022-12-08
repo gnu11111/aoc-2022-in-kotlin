@@ -1,6 +1,6 @@
 package at.gnu.adventofcode.year2022
 
-class Day07(private val input: List<String>) {
+class Day07(input: List<String>) {
 
     companion object {
         const val input = "/adventofcode/year2022/Day07.txt"
@@ -13,12 +13,12 @@ class Day07(private val input: List<String>) {
 
     data class Directory(
         val name: String,
-        val parent: Directory?,
+        val parent: Directory? = null,
         val files: MutableList<File> = mutableListOf(),
         val directories: MutableList<Directory> = mutableListOf()
     )
 
-    private val sizes = createTree().calculateDirectorySizes()
+    private val sizes = createTree(input).calculateDirectorySizes()
 
     fun part1(): Int =
         sizes.sumOf { if (it < 100000) it else 0 }
@@ -32,8 +32,8 @@ class Day07(private val input: List<String>) {
     private fun Directory.calculateTotalSize(): Int =
         files.sumOf { it.size } + directories.sumOf { it.calculateTotalSize() }
 
-    private fun createTree(): Directory {
-        val root = Directory("/", null, mutableListOf(), mutableListOf())
+    private fun createTree(input: List<String>): Directory {
+        val root = Directory("/")
         var current = root
         for (line in input) {
             when {
