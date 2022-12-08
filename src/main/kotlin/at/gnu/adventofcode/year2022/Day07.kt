@@ -21,10 +21,10 @@ class Day07(input: List<String>) {
     private val sizes = createTree(input).calculateDirectorySizes()
 
     fun part1(): Int =
-        sizes.sumOf { if (it < 100000) it else 0 }
+        sizes.sumOf { if (it <= 100000) it else 0 }
 
     fun part2(): Int =
-        sizes.sorted().first { it > (sizes.first() - 40000000) }
+        sizes.sorted().first { it >= (sizes.first() - 40000000) }
 
     private fun Directory.calculateDirectorySizes(sizes: List<Int> = emptyList()): List<Int> =
         directories.fold(sizes + calculateTotalSize()) { acc, it -> acc + it.calculateDirectorySizes() }
