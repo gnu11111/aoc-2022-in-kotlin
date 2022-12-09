@@ -50,9 +50,10 @@ class Day07(input: List<String>) {
                 }
 
                 file.matches(line) -> {
-                    val fileName = file.matchEntire(line)!!.groups[2]!!.value
+                    val groupValues = file.matchEntire(line)!!.groups
+                    val fileName = groupValues[2]!!.value
                     if (current.files.none { it.name == fileName })
-                        current.files += File(fileName, size = file.matchEntire(line)!!.groups[1]!!.value.toInt())
+                        current.files += File(fileName, size = groupValues[1]!!.value.toInt())
                 }
 
                 else -> continue
