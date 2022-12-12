@@ -18,19 +18,18 @@ class Day05(configuration: List<String>, rearrangement: List<String>) {
         }
     }
 
-    private val stacks: Map<Int, List<Char>>
-    init {
+    private val stacks: Map<Int, List<Char>> = buildMap {
         val amountOfStacks = configuration.maxOf { it.length + 1 } / 4
         val temp = mutableMapOf<Int, List<Char>>()
         for (i in 0 until amountOfStacks)
             temp[i + 1] = mutableListOf()
-        for (i in 0 until (configuration.size - 1))
+        for (i in (configuration.size - 2) downTo 0)
             for (j in 0 until amountOfStacks) {
                 val crate = configuration[i].getOrNull((j * 4) + 1) ?: continue
                 if (crate != ' ')
                     temp[j + 1] = temp[j + 1]!!.plus(crate)
             }
-        stacks = temp.map { it.key to it.value.reversed() }.associate { it.first to it.second }
+        temp.forEach { put(it.key, it.value) }
     }
 
     fun part1(): String =
