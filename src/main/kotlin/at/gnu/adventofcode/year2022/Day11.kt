@@ -74,9 +74,9 @@ class Day11(input: List<String>) {
                     inspections[monkey.number] = inspections.getOrPut(monkey.number) { 0L }.plus(1L)
                     val newWorryLevel = postOperation(monkey.inspect(item))
                     itemsThrown += if ((newWorryLevel % monkey.divisor) == 0L)
-                        Triple(item, newWorryLevel, this.getByNumber(monkey.destination.first))
+                        Triple(item, newWorryLevel, getByNumber(monkey.destination.first))
                     else
-                        Triple(item, newWorryLevel, this.getByNumber(monkey.destination.second))
+                        Triple(item, newWorryLevel, getByNumber(monkey.destination.second))
                 }
                 for (itemThrown in itemsThrown) {
                     monkey.items.remove(itemThrown.first)
