@@ -1,6 +1,6 @@
 package at.gnu.adventofcode.year2022
 
-class Day09(val movements: List<String>) {
+class Day09(input: List<String>) {
 
     companion object {
         const val input = "/adventofcode/year2022/Day09.txt"
@@ -28,18 +28,20 @@ class Day09(val movements: List<String>) {
         }
     }
 
+    private val movements = input.map { line -> line.split(" ").let { it[0] to it[1].toInt() }}
+
+
     fun part1(): Int =
         calculateVisitedPositions(tailLength = 1).size
 
     fun part2(): Int =
         calculateVisitedPositions(tailLength = 9).size
 
-    private fun calculateVisitedPositions(tailLength: Int): Set<Pair<Int, Int>> {
-        val visitedPositions = mutableSetOf<Pair<Int, Int>>()
+    private fun calculateVisitedPositions(tailLength: Int): Set<String> {
+        val visitedPositions = mutableSetOf<String>()
         val head = MovingObject()
         val tails = List(tailLength) { MovingObject() }
-        for (movement in movements) {
-            val (direction, amount) = movement.split(" ").let { it[0] to it[1].toInt() }
+        for ((direction, amount) in movements) {
             for (i in 1..amount) {
                 when (direction) {
                     "R" -> head.x++
@@ -48,8 +50,8 @@ class Day09(val movements: List<String>) {
                     "D" -> head.y++
                 }
                 tails.first() follows head
-                (1 until tailLength).forEach { tails[it] follows tails[it - 1] }
-                visitedPositions += tails.last().x to tails.last().y
+                tails.zipWithNext().forEach { it.second follows it.first }
+                visitedPositions += tails.last().toString()
             }
         }
         return visitedPositions
