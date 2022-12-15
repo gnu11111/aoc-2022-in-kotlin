@@ -1,29 +1,23 @@
 package at.gnu.adventofcode.year2022
 
+import kotlin.math.abs
+import kotlin.math.max
+
 class Day09(input: List<String>) {
 
     companion object {
         const val input = "/adventofcode/year2022/Day09.txt"
     }
 
-    data class MovingObject(var x: Int = 0, var y: Int = 0) {
+    data class Position(var x: Int = 0, var y: Int = 0) {
 
-        infix fun follows(movingObject: MovingObject) {
+        infix fun follows(movingObject: Position) {
             val dx = movingObject.x - x
             val dy = movingObject.y - y
-            when {
-                (dx > 1) && (dy > 0) -> { x++; y++ }
-                (dx > 1) && (dy < 0) -> { x++; y-- }
-                (dx < -1) && (dy > 0) -> { x--; y++ }
-                (dx < -1) && (dy < 0) -> { x--; y-- }
-                (dy > 1) && (dx > 0) -> { y++; x++ }
-                (dy > 1) && (dx < 0) -> { y++; x-- }
-                (dy < -1) && (dx > 0) -> { y--; x++ }
-                (dy < -1) && (dx < 0) -> { y--; x-- }
-                (dx > 1) -> { x++ }
-                (dx < -1) -> { x-- }
-                (dy > 1) -> { y++ }
-                (dy < -1) -> { y-- }
+            val distance = max(abs(dx), abs(dy))
+            if (distance > 1) {
+                x += dx.coerceIn(-1, 1)
+                y += dy.coerceIn(-1, 1)
             }
         }
     }
@@ -32,26 +26,26 @@ class Day09(input: List<String>) {
 
 
     fun part1(): Int =
-        calculateVisitedPositions(tailLength = 1).size
+        calculateVisitedPositions().size
 
     fun part2(): Int =
         calculateVisitedPositions(tailLength = 9).size
 
-    private fun calculateVisitedPositions(tailLength: Int): Set<String> {
+    private fun calculateVisitedPositions(tailLength: Int = 1): Set<String> {
         val visitedPositions = mutableSetOf<String>()
-        val head = MovingObject()
-        val tails = List(tailLength) { MovingObject() }
+        val head = Position()
+        val tail = List(tailLength) { Position() }
         for ((direction, amount) in movements) {
-            for (i in 1..amount) {
+            repeat(amount) {
                 when (direction) {
                     "R" -> head.x++
                     "L" -> head.x--
                     "U" -> head.y--
                     "D" -> head.y++
                 }
-                tails.first() follows head
-                tails.zipWithNext().forEach { it.second follows it.first }
-                visitedPositions += tails.last().toString()
+                tail.first() follows head
+                tail.zipWithNext().forEach { it.second follows it.first }
+                visitedPositions += tail.last().toString()
             }
         }
         return visitedPositions

@@ -92,8 +92,7 @@ class Day11(input: List<String>) {
 }
 
 fun main() {
-    val input = Day11::class.java.getResource(Day11.input)!!.readText().trim().replace("\r", "").split("\n\n")
-    val day11 = Day11(input)
+    val day11 = Day11(Day11::class.java.getResource(Day11.input)!!.readText().trim().replace("\r", "").split("\n\n"))
     println("Day11::part1 -> ${day11.part1()}")
     println("Day11::part2 -> ${day11.part2()}")
 }
