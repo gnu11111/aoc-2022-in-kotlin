@@ -33,7 +33,7 @@ class Day12(input: List<String>) {
         area.flatMap { it.filter { tile -> tile.height == 0 } }.minOf { calculateStepsOfShortestPath(it, end) }
 
     private fun calculateStepsOfShortestPath(from: Tile, to: Tile, h: (Tile, Tile) -> Double = ::aStar): Int {
-        resetTiles()
+        resetPathDataInTiles()
         val openList = PriorityQueue<Tile>().apply { add(from) }
         val closedList = mutableSetOf<Tile>()
         while (openList.isNotEmpty()) {
@@ -47,11 +47,11 @@ class Day12(input: List<String>) {
     }
 
     private fun Tile.expand(to: Tile, openList: PriorityQueue<Tile>, closedList: Set<Tile>, h: (Tile, Tile) -> Double) {
-        for (successor in this.neighbors()) {
+        for (successor in neighbors()) {
             // do not consider height differences of more than 1 from here to the successor
             if ((successor in closedList) || (successor.height > (height + 1)))
                 continue
-            val tentativeG = this.g + 1 // the cost to get to the successor is always 1
+            val tentativeG = g + 1 // the cost to get to the successor is always 1
             if ((successor in openList) && (tentativeG >= successor.g))
                 continue
             successor.predecessor = this
@@ -68,7 +68,7 @@ class Day12(input: List<String>) {
     private fun aStar(from: Tile, to: Tile): Double =
         sqrt((((from.x - to.x) * (from.x - to.x)) + ((from.y - to.y) * (from.y - to.y))).toDouble())
 
-    private fun resetTiles() =
+    private fun resetPathDataInTiles() =
         area.forEach { it.forEach { tile -> tile.f = 0.0; tile.g = 0; tile.predecessor = null } }
 
     private fun Tile.neighbors(): Set<Tile> =
