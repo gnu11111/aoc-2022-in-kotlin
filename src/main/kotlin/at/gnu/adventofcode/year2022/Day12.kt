@@ -33,7 +33,7 @@ class Day12(input: List<String>) {
         area.flatMap { it.filter { tile -> tile.height == 0 } }.minOf { calculateStepsOfShortestPath(it, end) }
 
     private fun calculateStepsOfShortestPath(from: Tile, to: Tile, h: (Tile, Tile) -> Double = ::aStar): Int {
-        area.forEach { it.forEach { tile -> tile.f = 0.0; tile.g = 0; tile.predecessor = null } }
+        resetTiles()
         val openList = PriorityQueue<Tile>().apply { add(from) }
         val closedList = mutableSetOf<Tile>()
         while (openList.isNotEmpty()) {
@@ -48,11 +48,10 @@ class Day12(input: List<String>) {
 
     private fun Tile.expand(to: Tile, openList: PriorityQueue<Tile>, closedList: Set<Tile>, h: (Tile, Tile) -> Double) {
         for (successor in this.neighbors()) {
-            if (successor in closedList)
+            // do not consider height differences of more than 1 from here to the successor
+            if ((successor in closedList) || (successor.height > (height + 1)))
                 continue
-            if (successor.height > (height + 1))
-                continue
-            val tentativeG = this.g + 1
+            val tentativeG = this.g + 1 // the cost to get to the successor is always 1
             if ((successor in openList) && (tentativeG >= successor.g))
                 continue
             successor.predecessor = this
@@ -69,6 +68,9 @@ class Day12(input: List<String>) {
     private fun aStar(from: Tile, to: Tile): Double =
         sqrt((((from.x - to.x) * (from.x - to.x)) + ((from.y - to.y) * (from.y - to.y))).toDouble())
 
+    private fun resetTiles() =
+        area.forEach { it.forEach { tile -> tile.f = 0.0; tile.g = 0; tile.predecessor = null } }
+
     private fun Tile.neighbors(): Set<Tile> =
         setOf(tileAt(x - 1, y), tileAt(x + 1, y), tileAt(x, y - 1), tileAt(x, y + 1))
 
@@ -78,6 +80,6 @@ class Day12(input: List<String>) {
 
 fun main() {
     val day12 = Day12(Day12::class.java.getResource(Day12.input)!!.readText().trim().split("\n", "\r\n"))
-    println("Day12::part1 -> ${day12.part1()}") // 422 too high
+    println("Day12::part1 -> ${day12.part1()}")
     println("Day12::part2 -> ${day12.part2()}")
 }
