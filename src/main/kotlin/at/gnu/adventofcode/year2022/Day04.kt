@@ -3,7 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day04(sectionAssignmentPairs: List<String>) {
 
     companion object {
-        const val input = "/adventofcode/year2022/Day04.txt"
+        const val resource = "/adventofcode/year2022/Day04.txt"
     }
 
     private val sections = sectionAssignmentPairs.map {
@@ -21,7 +21,7 @@ class Day04(sectionAssignmentPairs: List<String>) {
 }
 
 fun main() {
-    val input = Day04::class.java.getResource(Day04.input)!!.readText().trim().split("\n", "\r\n")
+    val input = Day04::class.java.getResource(Day04.resource)!!.readText().trim().split("\n", "\r\n")
     val day04 = Day04(input)
     println("Day04::part1 -> ${day04.part1()}")
     println("Day04::part2 -> ${day04.part2()}")

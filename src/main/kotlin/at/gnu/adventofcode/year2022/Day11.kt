@@ -3,8 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day11(input: List<String>) {
 
     companion object {
-
-        const val input = "/adventofcode/year2022/Day11.txt"
+        const val resource = "/adventofcode/year2022/Day11.txt"
         val section = """
             Monkey (\d+):
               Starting items: (.*)
@@ -92,7 +91,7 @@ class Day11(input: List<String>) {
 }
 
 fun main() {
-    val day11 = Day11(Day11::class.java.getResource(Day11.input)!!.readText().trim().replace("\r", "").split("\n\n"))
+    val day11 = Day11(Day11::class.java.getResource(Day11.resource)!!.readText().trim().replace("\r", "").split("\n\n"))
     println("Day11::part1 -> ${day11.part1()}")
     println("Day11::part2 -> ${day11.part2()}")
 }

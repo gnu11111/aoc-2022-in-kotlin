@@ -3,7 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day07(input: List<String>) {
 
     companion object {
-        const val input = "/adventofcode/year2022/Day07.txt"
+        const val resource = "/adventofcode/year2022/Day07.txt"
         val cd = """\$ cd (.*)""".toRegex()
         val dir = """dir (.*)""".toRegex()
         val file = """(\d+) (.*)""".toRegex()
@@ -64,7 +64,7 @@ class Day07(input: List<String>) {
 }
 
 fun main() {
-    val day07 = Day07(Day07::class.java.getResource(Day07.input)!!.readText().trim().split("\n", "\r\n"))
+    val day07 = Day07(Day07::class.java.getResource(Day07.resource)!!.readText().trim().split("\n", "\r\n"))
     println("Day07::part1 -> ${day07.part1()}")
     println("Day07::part2 -> ${day07.part2()}")
 }

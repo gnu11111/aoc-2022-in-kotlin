@@ -6,7 +6,7 @@ import kotlin.math.sqrt
 class Day12(input: List<String>) {
 
     companion object {
-        const val input = "/adventofcode/year2022/Day12.txt"
+        const val resource = "/adventofcode/year2022/Day12.txt"
         val outOfBounds = Tile(-1, -1, 30)
     }
 
@@ -79,7 +79,7 @@ class Day12(input: List<String>) {
 }
 
 fun main() {
-    val day12 = Day12(Day12::class.java.getResource(Day12.input)!!.readText().trim().split("\n", "\r\n"))
+    val day12 = Day12(Day12::class.java.getResource(Day12.resource)!!.readText().trim().split("\n", "\r\n"))
     println("Day12::part1 -> ${day12.part1()}")
     println("Day12::part2 -> ${day12.part2()}")
 }

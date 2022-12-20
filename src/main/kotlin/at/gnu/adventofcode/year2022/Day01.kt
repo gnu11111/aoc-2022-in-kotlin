@@ -3,7 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day01(private val caloriesPerElf: List<List<Int>>) {
 
     companion object {
-        const val input = "/adventofcode/year2022/Day01.txt"
+        const val resource = "/adventofcode/year2022/Day01.txt"
     }
 
     fun part1(): Int =
@@ -14,7 +14,7 @@ class Day01(private val caloriesPerElf: List<List<Int>>) {
 }
 
 fun main() {
-    val input = Day01::class.java.getResource(Day01.input)!!.readText().trim().split("\n\n", "\r\n\r\n").map {
+    val input = Day01::class.java.getResource(Day01.resource)!!.readText().trim().split("\n\n", "\r\n\r\n").map {
         it.lines().map(String::toInt)
     }
     val day01 = Day01(input)
