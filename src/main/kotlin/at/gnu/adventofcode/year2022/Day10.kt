@@ -31,11 +31,11 @@ class Day10(input: List<String>) {
         var state = State(0, 1)
         val states = mutableListOf(state)
         for ((command, argument) in program) {
-            states += when (command) {
+            state = when (command) {
                 "noop" -> State(state.ip + 1, state.x)
                 else -> State(state.ip + 2, state.x + argument)
             }
-            state = states.last()
+            states += state
         }
         return states
     }
