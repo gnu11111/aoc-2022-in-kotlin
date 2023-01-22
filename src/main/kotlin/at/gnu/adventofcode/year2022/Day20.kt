@@ -1,30 +1,28 @@
 package at.gnu.adventofcode.year2022
 
+
 class Day20(val input: List<Int>) {
 
     companion object {
         const val resource = "/adventofcode/year2022/Day20.txt"
+        const val decryptionKey = 811_589_153
     }
 
     data class Number(val value: Long, val initialIndex: Int = 0)
 
-    private val initialNumbers = input.mapIndexed { i, number -> Number(number.toLong(), i) }
+    private val numbers = input.mapIndexed { i, number -> Number(number.toLong(), i) }
 
 
-    fun part1(): Long {
-        val numbers = initialNumbers.toMutableList()
-        numbers.decrypt()
-        return calculateSumOfCoordinates(numbers)
-    }
+    fun part1(): Long =
+        numbers.toMutableList().decrypt().calculateSumOfCoordinates()
 
     fun part2(): Long {
-        val numbers = initialNumbers.map { Number(it.value * 811_589_153, it.initialIndex) }.toMutableList()
-        numbers.decrypt(10)
-        return calculateSumOfCoordinates(numbers)
+        val actualNumbers = numbers.map { Number(it.value * decryptionKey, it.initialIndex) }.toMutableList()
+        return actualNumbers.decrypt(10).calculateSumOfCoordinates()
     }
 
 
-    private fun MutableList<Number>.decrypt(times: Int = 1) {
+    private fun MutableList<Number>.decrypt(times: Int = 1): MutableList<Number> {
         repeat(times) {
             for (i in indices) {
                 val index = indexOfFirst { it.initialIndex == i }
@@ -32,11 +30,12 @@ class Day20(val input: List<Int>) {
                 add((index + number.value).mod(size), number)
             }
         }
+        return this
     }
 
-    private fun calculateSumOfCoordinates(numbers: MutableList<Number>): Long {
-        val index = numbers.indexOfFirst { it.value == 0L }
-        return listOf(1000, 2000, 3000).sumOf { numbers[(index + it) % numbers.size].value }
+    private fun MutableList<Number>.calculateSumOfCoordinates(): Long {
+        val index = indexOfFirst { it.value == 0L }
+        return listOf(1000, 2000, 3000).sumOf { this[(index + it) % size].value }
     }
 }
 
