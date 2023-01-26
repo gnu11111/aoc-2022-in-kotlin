@@ -71,13 +71,15 @@ class Day21(input: List<String>) {
                 hi = mid
         }
 
-//        println(monkeys.getMonkey(fix).value!!)
-//        println(monkeys.getMonkey(variable).value!!)
-//
-//        for (i in 0..10) {
-//            root.resetValues().fillValues(3782852515580L + i)
-//            println("${3782852515580L + i} ${monkeys.getMonkey(root.monkey1).value} ${monkeys.getMonkey(root.monkey2).value}")
-//        }
+        // search for a slightly smaller correct solution (integer arithmetic)
+        for (i in -20..0) {
+            root.resetValues().fillValues(mid + i)
+            val value1 = monkeys.getMonkey(root.monkey1).value
+            val value2 = monkeys.getMonkey(root.monkey2).value
+//            println("${mid + i} $value1 $value2")
+            if (value1 == value2)
+                return mid + i
+        }
 
         return mid
     }
@@ -121,5 +123,5 @@ fun main() {
     val input = Day21::class.java.getResource(Day21.resource)!!.readText().trim().split("\n", "\r\n")
     val day21 = Day21(input)
     println("Day21::part1 -> ${day21.part1()}")
-    println("Day21::part2 -> ${day21.part2()}") // 3782852515583
+    println("Day21::part2 -> ${day21.part2()}")
 }
