@@ -6,7 +6,7 @@ import kotlin.math.min
 class Day14(pathes: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day14.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day14.txt"
         val hole = Pair(500, 0)
     }
 
@@ -88,7 +88,7 @@ class Day14(pathes: List<String>) {
 }
 
 fun main() {
-    val day14 = Day14(Day14::class.java.getResource(Day14.resource)!!.readText().trim().split("\n", "\r\n"))
+    val day14 = Day14(Day14::class.java.getResource(Day14.RESOURCE)!!.readText().trim().split("\n", "\r\n"))
     println("Day14::part1 -> ${day14.part1()}")
     println("Day14::part2 -> ${day14.part2()}")
 }

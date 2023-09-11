@@ -3,7 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day13(input: List<Pair<String, String>>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day13.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day13.txt"
         val divider1 = Packet(listOf(Value(2)))
         val divider2 = Packet(listOf(Value(6)))
     }
@@ -86,7 +86,7 @@ class Day13(input: List<Pair<String, String>>) {
 }
 
 fun main() {
-    val packets = Day13::class.java.getResource(Day13.resource)!!.readText().trim().replace("\r", "")
+    val packets = Day13::class.java.getResource(Day13.RESOURCE)!!.readText().trim().replace("\r", "")
         .replace("\n\n", "\n").split("\n").chunked(2).map { it[0] to it[1] }
     val day13 = Day13(packets)
     println("Day13::part1 -> ${day13.part1()}")

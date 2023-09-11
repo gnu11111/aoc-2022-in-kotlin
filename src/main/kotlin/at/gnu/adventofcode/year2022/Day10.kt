@@ -3,7 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day10(input: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day10.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day10.txt"
     }
 
     class State(val ip: Int, val x: Int)
@@ -45,7 +45,7 @@ class Day10(input: List<String>) {
 }
 
 fun main() {
-    val day10 = Day10(Day10::class.java.getResource(Day10.resource)!!.readText().trim().split("\n", "\r\n"))
+    val day10 = Day10(Day10::class.java.getResource(Day10.RESOURCE)!!.readText().trim().split("\n", "\r\n"))
     println("Day10::part1 -> ${day10.part1()}")
     println("Day10::part2 ->\n${day10.part2()}")
 }

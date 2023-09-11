@@ -5,8 +5,7 @@ import kotlin.math.abs
 class Day15(positions: List<String>) {
 
     companion object {
-
-        const val resource = "/adventofcode/year2022/Day15.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day15.txt"
         val report = """Sensor at x=(.+?), y=(.+?): closest beacon is at x=(.+?), y=(.+?)""".toRegex()
     }
 
@@ -66,7 +65,7 @@ class Day15(positions: List<String>) {
 }
 
 fun main() {
-    val day15 = Day15(Day15::class.java.getResource(Day15.resource)!!.readText().trim().split("\n", "\r\n"))
+    val day15 = Day15(Day15::class.java.getResource(Day15.RESOURCE)!!.readText().trim().split("\n", "\r\n"))
     println("Day15::part1 -> ${day15.part1(y = 2000000)}")
     println("Day15::part2 -> ${day15.part2(max = 4000000)}")
 }

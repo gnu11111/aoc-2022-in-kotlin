@@ -5,7 +5,7 @@ import at.gnu.adventofcode.year2022.Day02.Sign.*
 class Day02(input: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day02.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day02.txt"
     }
 
     enum class Sign(val score: Int) { Rock(1), Paper(2), Scissors(3) }
@@ -52,7 +52,7 @@ class Day02(input: List<String>) {
 }
 
 fun main() {
-    val input = Day02::class.java.getResource(Day02.resource)!!.readText().trim().split("\n", "\r\n")
+    val input = Day02::class.java.getResource(Day02.RESOURCE)!!.readText().trim().split("\n", "\r\n")
     val day02 = Day02(input)
     println("Day02::part1 -> ${day02.part1()}")
     println("Day02::part2 -> ${day02.part2()}")

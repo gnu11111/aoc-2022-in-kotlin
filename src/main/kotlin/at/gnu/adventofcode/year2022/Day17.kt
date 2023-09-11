@@ -3,8 +3,8 @@ package at.gnu.adventofcode.year2022
 class Day17(private val jetPattern: String) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day17.txt"
-        const val width = 7
+        const val RESOURCE = "/adventofcode/year2022/Day17.txt"
+        const val WIDTH = 7
         val shapes = listOf(listOf("####"), listOf(".#.", "###", ".#."), listOf("..#", "..#", "###"),
             listOf("#", "#", "#", "#"), listOf("##", "##"))
     }
@@ -20,7 +20,7 @@ class Day17(private val jetPattern: String) {
 
 
     private fun simulateRockDrops(rocks: Long): Long {
-        val ground = mutableListOf("#".repeat(width).toCharArray())
+        val ground = mutableListOf("#".repeat(WIDTH).toCharArray())
         val seenSignatures = mutableMapOf<Signature, Pair<Long, Long>>()
         var jetStreamCycle = -1
         var rock = -1L
@@ -34,7 +34,7 @@ class Day17(private val jetPattern: String) {
             while (!ground.hits(shape, x, y)) {
                 jetStreamCycle = (jetStreamCycle + 1) % jetPattern.length
                 val direction = jetPattern[jetStreamCycle]
-                val dx = if ((direction == '>') && (x < (width - shape.first().length)))
+                val dx = if ((direction == '>') && (x < (WIDTH - shape.first().length)))
                     1L
                 else if ((direction == '<') && (x > 0))
                     -1L
@@ -81,7 +81,7 @@ class Day17(private val jetPattern: String) {
         var addedHeight = 0
         for (dy in shape.size downTo 1) {
             if ((y - dy) >= this.size) {
-                this.add(".".repeat(width).toCharArray())
+                this.add(".".repeat(WIDTH).toCharArray())
                 addedHeight++
             }
             for (dx in shape[dy - 1].indices)
@@ -92,7 +92,7 @@ class Day17(private val jetPattern: String) {
 }
 
 fun main() {
-    val day17 = Day17(Day17::class.java.getResource(Day17.resource)!!.readText().trim())
+    val day17 = Day17(Day17::class.java.getResource(Day17.RESOURCE)!!.readText().trim())
     println("Day17::part1 -> ${day17.part1()}")
     println("Day17::part2 -> ${day17.part2()}")
 }

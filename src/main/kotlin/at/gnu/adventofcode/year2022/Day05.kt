@@ -5,7 +5,7 @@ import kotlin.math.min
 class Day05(configuration: List<String>, rearrangement: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day05.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day05.txt"
         val command = """move (\d+) from (\d+) to (\d+)""".toRegex()
     }
 
@@ -55,7 +55,7 @@ class Day05(configuration: List<String>, rearrangement: List<String>) {
 }
 
 fun main() {
-    val input = Day05::class.java.getResource(Day05.resource)!!.readText().split("\n\n", "\r\n\r\n").map {
+    val input = Day05::class.java.getResource(Day05.RESOURCE)!!.readText().split("\n\n", "\r\n\r\n").map {
         it.split("\n", "\r\n")
     }
     val day05 = Day05(input.first(), input.last())

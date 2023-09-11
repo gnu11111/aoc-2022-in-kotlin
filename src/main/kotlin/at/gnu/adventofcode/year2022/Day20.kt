@@ -4,8 +4,8 @@ package at.gnu.adventofcode.year2022
 class Day20(val input: List<Int>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day20.txt"
-        const val decryptionKey = 811_589_153
+        const val RESOURCE = "/adventofcode/year2022/Day20.txt"
+        const val DECRYPTION_KEY = 811_589_153
     }
 
     data class Number(val value: Long, val initialIndex: Int = 0)
@@ -17,7 +17,7 @@ class Day20(val input: List<Int>) {
         numbers.toMutableList().decrypt().calculateSumOfCoordinates()
 
     fun part2(): Long {
-        val actualNumbers = numbers.map { Number(it.value * decryptionKey, it.initialIndex) }.toMutableList()
+        val actualNumbers = numbers.map { Number(it.value * DECRYPTION_KEY, it.initialIndex) }.toMutableList()
         return actualNumbers.decrypt(10).calculateSumOfCoordinates()
     }
 
@@ -40,7 +40,7 @@ class Day20(val input: List<Int>) {
 }
 
 fun main() {
-    val input = Day20::class.java.getResource(Day20.resource)!!.readText().trim().split("\n", "\r\n").map(String::toInt)
+    val input = Day20::class.java.getResource(Day20.RESOURCE)!!.readText().trim().split("\n", "\r\n").map(String::toInt)
     val day20 = Day20(input)
     println("Day20::part1 -> ${day20.part1()}")
     println("Day20::part2 -> ${day20.part2()}")

@@ -3,7 +3,7 @@ package at.gnu.adventofcode.year2022
 class Day08(private val trees: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day08.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day08.txt"
     }
 
     fun part1(): Int =
@@ -90,7 +90,7 @@ class Day08(private val trees: List<String>) {
 }
 
 fun main() {
-    val day08 = Day08(Day08::class.java.getResource(Day08.resource)!!.readText().trim().split("\n", "\r\n"))
+    val day08 = Day08(Day08::class.java.getResource(Day08.RESOURCE)!!.readText().trim().split("\n", "\r\n"))
     println("Day08::part1 -> ${day08.part1()}")
     println("Day08::part2 -> ${day08.part2()}")
 }

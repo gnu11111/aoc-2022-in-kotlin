@@ -3,10 +3,10 @@ package at.gnu.adventofcode.year2022
 class Day21(input: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day21.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day21.txt"
         val line = """(.*): (.*)""".toRegex()
-        const val rootName = "root"
-        const val humanName = "humn"
+        const val ROOT_NAME = "root"
+        const val HUMAN_NAME = "humn"
     }
 
     data class Monkey(val name: String, var value: Long? = null, val monkey1: String? = null,
@@ -25,8 +25,8 @@ class Day21(input: List<String>) {
     }
 
     init {
-        root = monkeys.getMonkey(rootName)
-        human = monkeys.getMonkey(humanName)
+        root = monkeys.getMonkey(ROOT_NAME)
+        human = monkeys.getMonkey(HUMAN_NAME)
     }
 
 
@@ -97,8 +97,8 @@ class Day21(input: List<String>) {
             for (monkey in monkeys) {
                 if (monkey.value != null)
                     continue
-                val value1 = if ((monkey.monkey1 == humanName) && (humanValue != null)) humanValue else monkeys.getMonkey(monkey.monkey1).value
-                val value2 = if ((monkey.monkey2 == humanName) && (humanValue != null)) humanValue else monkeys.getMonkey(monkey.monkey2).value
+                val value1 = if ((monkey.monkey1 == HUMAN_NAME) && (humanValue != null)) humanValue else monkeys.getMonkey(monkey.monkey1).value
+                val value2 = if ((monkey.monkey2 == HUMAN_NAME) && (humanValue != null)) humanValue else monkeys.getMonkey(monkey.monkey2).value
                 if ((value1 != null) && (value2 != null))
                     monkey.value = calculateExpression(value1, monkey.operation!!, value2)
             }
@@ -120,7 +120,7 @@ class Day21(input: List<String>) {
 }
 
 fun main() {
-    val input = Day21::class.java.getResource(Day21.resource)!!.readText().trim().split("\n", "\r\n")
+    val input = Day21::class.java.getResource(Day21.RESOURCE)!!.readText().trim().split("\n", "\r\n")
     val day21 = Day21(input)
     println("Day21::part1 -> ${day21.part1()}")
     println("Day21::part2 -> ${day21.part2()}")

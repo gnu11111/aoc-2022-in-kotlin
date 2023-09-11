@@ -6,7 +6,7 @@ import kotlin.math.max
 class Day09(input: List<String>) {
 
     companion object {
-        const val resource = "/adventofcode/year2022/Day09.txt"
+        const val RESOURCE = "/adventofcode/year2022/Day09.txt"
     }
 
     data class Position(var x: Int = 0, var y: Int = 0) {
@@ -53,7 +53,7 @@ class Day09(input: List<String>) {
 }
 
 fun main() {
-    val day09 = Day09(Day09::class.java.getResource(Day09.resource)!!.readText().trim().split("\n", "\r\n"))
+    val day09 = Day09(Day09::class.java.getResource(Day09.RESOURCE)!!.readText().trim().split("\n", "\r\n"))
     println("Day09::part1 -> ${day09.part1()}")
     println("Day09::part2 -> ${day09.part2()}")
 }
